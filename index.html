@@ -1,0 +1,98 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>AI Assistant Case Study</title>
+    <link rel="stylesheet" href="styles.css" />
+  </head>
+  <body>
+    <div
+      id="welcomeModal"
+      class="modal-overlay"
+      role="dialog"
+      aria-modal="true"
+      aria-labelledby="welcomeTitle"
+    >
+      <div class="modal-card">
+        <p class="eyebrow">AI Assistant</p>
+        <h2 id="welcomeTitle">Welcome to the chat demo</h2>
+        <p class="modal-copy">
+          Hello. I'm ready to help. Choose a mode, send a message, and the
+          conversation will stay visible for this session.
+        </p>
+        <button
+          id="closeModalBtn"
+          class="send-button modal-button"
+          type="button"
+        >
+          Start Chatting
+        </button>
+      </div>
+    </div>
+
+    <main class="app-shell">
+      <section class="chat-card" aria-label="AI assistant chat interface">
+        <header class="header">
+          <div>
+            <p class="eyebrow">Internal Tool Demo</p>
+            <h1>Kirti's AI Assistant</h1>
+          </div>
+          <button id="clearChatBtn" class="ghost-button" type="button">
+            Clear Chat
+          </button>
+        </header>
+
+        <div class="mode-row">
+          <label for="modeSelect">Response mode</label>
+          <select id="modeSelect" aria-label="Select assistant mode">
+            <option value="Friendly">Friendly</option>
+            <option value="Professional">Professional</option>
+            <option value="Concise">Concise</option>
+          </select>
+        </div>
+
+        <section id="chatWindow" class="chat-window" aria-live="polite">
+          <article class="message assistant intro-message">
+            <p class="message-label">AI Assistant</p>
+            <p>
+              Hello. I'm ready to help. Choose a mode, send a message, and the
+              conversation will stay visible for this session.
+            </p>
+          </article>
+        </section>
+
+        <div
+          id="loadingIndicator"
+          class="loading-indicator hidden"
+          aria-live="polite"
+        >
+          <span class="loading-dot"></span>
+          <span class="loading-dot"></span>
+          <span class="loading-dot"></span>
+          <span>Generating response...</span>
+        </div>
+
+        <form id="chatForm" class="composer" novalidate>
+          <label class="sr-only" for="messageInput">Type your message</label>
+          <textarea
+            id="messageInput"
+            rows="4"
+            placeholder="Ask a question, draft something, or paste text to analyze..."
+          ></textarea>
+
+          <div class="composer-footer">
+            <p id="errorMessage" class="error-message" role="alert"></p>
+            <div class="composer-controls">
+              <span id="charCounter" class="char-counter">0 / 500</span>
+              <button id="sendBtn" class="send-button" type="submit" disabled>
+                Send
+              </button>
+            </div>
+          </div>
+        </form>
+      </section>
+    </main>
+    <script src="script.js"></script>
+  </body>
+</html>
