@@ -107,7 +107,7 @@ function renderConversation() {
     appendMessage(
       'assistant intro-message',
       'AI Assistant',
-      "Hello. I'm ready to help. Choose a mode, send a message, and the conversation will stay visible for this session.",
+      'This chatbot currently uses mock replies, so please try simple messages like "Hi", "How are you?", or "Bye" to get a better experience.',
     )
     return
   }
@@ -132,13 +132,55 @@ function isGreeting(text) {
   )
 }
 
+function getBasicIntent(text) {
+  const normalized = text.trim().toLowerCase()
+
+  if (
+    /^(how are you|how are you doing|how r you|how are u)\??$/.test(normalized)
+  ) {
+    return 'how_are_you'
+  }
+
+  if (/^(what can you do|what do you do|help)\??$/.test(normalized)) {
+    return 'capabilities'
+  }
+
+  if (/^(thank you|thanks|thx)$/.test(normalized)) {
+    return 'thanks'
+  }
+
+  if (/^(bye|goodbye|see you|see ya)$/.test(normalized)) {
+    return 'bye'
+  }
+
+  return null
+}
+
 function isShortMessage(text) {
   return text.split(/\s+/).filter(Boolean).length <= 4
 }
 
 function generateFriendlyReply(text) {
+  const basicIntent = getBasicIntent(text)
+
   if (isGreeting(text)) {
     return "Hey there! I'm happy to help. Tell me what you need and we'll figure it out together."
+  }
+
+  if (basicIntent === 'how_are_you') {
+    return "I'm doing well, thanks for asking! I'm here and ready to help with whatever you need."
+  }
+
+  if (basicIntent === 'capabilities') {
+    return "I can help with ideas, rewriting, summaries, and simple chat replies in different tones. Just send me a message and I'll respond in the selected mode."
+  }
+
+  if (basicIntent === 'thanks') {
+    return "You're very welcome! If you'd like, send another message and I'll keep helping."
+  }
+
+  if (basicIntent === 'bye') {
+    return 'See you soon! Come back anytime if you need help.'
   }
 
   if (isShortMessage(text)) {
@@ -149,8 +191,26 @@ function generateFriendlyReply(text) {
 }
 
 function generateProfessionalReply(text) {
+  const basicIntent = getBasicIntent(text)
+
   if (isGreeting(text)) {
     return 'Hello. How may I assist you today?'
+  }
+
+  if (basicIntent === 'how_are_you') {
+    return "I'm doing well, thank you. How may I assist you today?"
+  }
+
+  if (basicIntent === 'capabilities') {
+    return 'I can assist with drafting, rewriting, summarizing, and responding in different communication styles based on the selected mode.'
+  }
+
+  if (basicIntent === 'thanks') {
+    return "You're welcome. Please let me know if you need anything else."
+  }
+
+  if (basicIntent === 'bye') {
+    return 'Goodbye. Feel free to return if you need further assistance.'
   }
 
   if (isShortMessage(text)) {
@@ -161,8 +221,26 @@ function generateProfessionalReply(text) {
 }
 
 function generateConciseReply(text) {
+  const basicIntent = getBasicIntent(text)
+
   if (isGreeting(text)) {
     return 'Hi. What do you need?'
+  }
+
+  if (basicIntent === 'how_are_you') {
+    return "I'm good. How can I help?"
+  }
+
+  if (basicIntent === 'capabilities') {
+    return 'I can help with writing, summaries, and quick replies.'
+  }
+
+  if (basicIntent === 'thanks') {
+    return "You're welcome."
+  }
+
+  if (basicIntent === 'bye') {
+    return 'Goodbye.'
   }
 
   if (isShortMessage(text)) {
